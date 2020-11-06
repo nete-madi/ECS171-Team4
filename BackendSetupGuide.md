@@ -1,3 +1,4 @@
+ 0. Get Pycharm Pro(Free Education license: https://www.jetbrains.com/community/education/#students)
  1. Open Pycharm : Create basic Django project (make sure to use Virtualenv)
  2. Add `import os` to the settings.py
  3. Run `python manage.py startapp CoreBackend`. This will initialize the sub-app directory/files.
