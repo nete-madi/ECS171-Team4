@@ -40,3 +40,4 @@ def UploadPage(request):
 def EDAAndResults(request):  
     return HttpResponse("Hello, world. You're at the EDA and Results page!")
 ```
+8. Run `python manage.py runserver`
