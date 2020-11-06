@@ -1,3 +1,4 @@
+
  0. Get Pycharm Pro(Free Education license: https://www.jetbrains.com/community/education/#students)
  1. Open Pycharm : Create basic Django project (make sure to use Virtualenv)
  2. Add `import os` to the settings.py
@@ -54,11 +55,11 @@ def AboutUsAndDownload(request):
   
 def UploadPage(request):  
     Data = {}  
-    return render(request,"CoreBackend/results.html",Data)  
+    return render(request,"CoreBackend/upload.html",Data)  
   
 def EDAAndResults(request):  
     Data = {}  
-    return render(request,"CoreBackend/upload.html",Data)
+    return render(request, "CoreBackend/results.html", Data)
 ``` 
 10. Add a new directory to your `templates` directory called `CoreBackend`
 11.  Add the following files to `templates/CoreBackend`: `results.html`,`index.html`,`upload.html`
