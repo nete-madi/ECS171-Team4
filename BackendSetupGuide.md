@@ -40,4 +40,64 @@ def UploadPage(request):
 def EDAAndResults(request):  
     return HttpResponse("Hello, world. You're at the EDA and Results page!")
 ```
-8. Run `python manage.py runserver`
+8. You should be able to access your pages when you enter: http://127.0.0.1:8000/ in your browser [subpages: /upload,/results]
+9.  Now paste this code into your `CoreBackend/views.py`:
+```
+from django.shortcuts import render  
+from django.http import HttpResponse  
+  
+  
+def AboutUsAndDownload(request):  
+    Data = {}  
+    return render(request,"CoreBackend/index.html",Data)  
+  
+def UploadPage(request):  
+    Data = {}  
+    return render(request,"CoreBackend/results.html",Data)  
+  
+def EDAAndResults(request):  
+    Data = {}  
+    return render(request,"CoreBackend/upload.html",Data)
+``` 
+10. Add a new directory to your `templates` directory called `CoreBackend`
+11.  Add the following files to `templates/CoreBackend`: `results.html`,`index.html`,`upload.html`
+12. Paste this into your `index.html`:
+```
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>Title</title>  
+</head>  
+<body>  
+<p style="color:green"> This the about page!</p>  
+</body>  
+</html>
+```
+13. Paste this into your `results.html`:
+```
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>Title</title>  
+</head>  
+<body>  
+<p style="color:red"> This the result page!</p>  
+</body>  
+</html>
+```
+14. Paste this into your `upload.html`:
+```
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>Title</title>  
+</head>  
+<body>  
+<p style="color:blue"> This the upload page!</p>  
+</body>  
+</html>
+```
+15. Now if you go these pages: the html should be sent back to you instead of just text like before!
