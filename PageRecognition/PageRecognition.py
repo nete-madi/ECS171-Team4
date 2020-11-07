@@ -66,15 +66,22 @@ def transformPerspective(img, corners):
     return cv2.warpPerspective(img, transform, (width,height))
 
 def main():
-    img = cv2.imread('./LaptopSample.jpeg')
+    gold = cv2.imread('../patient-info-form-page-001.jpg')
+    img = cv2.imread('./PageSample.JPG')
     corners = findCorners(img, .5)
 
     # Draw the polygon on the original image
     cv2.drawContours(img, [corners], -1, (0,255,0), 3)
     cv2.imshow("img", img)
 
+    # Warp the image based on the corners found
     warped = transformPerspective(img, corners)
-    cv2.imshow('warped', warped)
+
+    # Resize the warped image so that it will fit on the gold standard
+    warped = cv2.resize(warped, (gold.shape[1], gold.shape[0]))
+
+    # Show the overlay of the warped and resized image with the gold standard
+    cv2.imshow('warped', warped + gold)
     cv2.waitKey(0)
 
 if __name__ == "__main__":
