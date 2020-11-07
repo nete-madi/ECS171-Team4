@@ -53,9 +53,17 @@ def autoCanny(resized_img, sigma):
     return edged_img
 
 
-def transformPerspective(img):
-    # return top-down view of image
-    pass
+def transformPerspective(img, corners):
+    # Return top-down view of image
+    points = [point.tolist()[0] for point in corners]
+    points.sort(key=lambda p: p[1])
+    points = sorted(points[:2], key=lambda p: p[0]) + sorted(points[2:], key=lambda p: p[0])
+    width = max([points[1][0] - points[0][0], points[3][0] - points[2][0]])
+    height = max([points[2][1] - points[0][1], points[3][1] - points[1][1]])
+    input_points = np.float32(points)
+    output_points = np.float32([[0,0],[width,0],[0,height],[width,height]])
+    transform = cv2.getPerspectiveTransform(input_points, output_points)
+    return cv2.warpPerspective(img, transform, (width,height))
 
 def main():
     img = cv2.imread('./LaptopSample.jpeg')
