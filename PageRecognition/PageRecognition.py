@@ -72,6 +72,9 @@ def main():
     # Draw the polygon on the original image
     cv2.drawContours(img, [corners], -1, (0,255,0), 3)
     cv2.imshow("img", img)
+
+    warped = transformPerspective(img, corners)
+    cv2.imshow('warped', warped)
     cv2.waitKey(0)
 
 if __name__ == "__main__":
