@@ -67,14 +67,6 @@ def save_boxes(boxes, original):
 def extract_boxes(boxes, original):
     output = []
 
-    png_path = 'individual_boxes/'
-    contours_path = 'contours/'
-    create_directory(png_path)
-    create_directory(contours_path)
-    image_width = original.shape[0]
-    image_height = original.shape[1]
-
-    image_number = 1
     for square in boxes:
         x = square[0]
         y = square[1]
