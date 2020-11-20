@@ -64,11 +64,34 @@ def save_boxes(boxes, original):
         cv2.imwrite(contours_path +'contours_{}.png'.format(image_number), img_copy)
         image_number += 1
 
-def get_boxes(image_name):
-    # 1. conversion to gray scale
-    # 2. binarization of the image. Using thresholding 
-    # read image and apply grayscale
-    img = cv2.imread(image_name, cv2.IMREAD_GRAYSCALE)
+def extract_boxes(boxes, original):
+    output = []
+
+    png_path = 'individual_boxes/'
+    contours_path = 'contours/'
+    create_directory(png_path)
+    create_directory(contours_path)
+    image_width = original.shape[0]
+    image_height = original.shape[1]
+
+    image_number = 1
+    for square in boxes:
+        x = square[0]
+        y = square[1]
+        w = square[2]
+        h = square[3]
+
+        # save actual square
+        square_box = original[y:y+h, x:x+w]
+        output.append(square_box)
+
+    return output
+
+def get_boxes(img):
+    # # 1. conversion to gray scale
+    # # 2. binarization of the image. Using thresholding
+    # # read image and apply grayscale
+    # img = cv2.imread(image_name, cv2.IMREAD_GRAYSCALE)
     # create a copy to extract fields from it later
     original = img.copy()
     # thresholding - simplest method of segmenting images (process of partitionning a digital image into multiple segments, goal is to simplify image into a representation that is easier to analyze)
@@ -106,7 +129,12 @@ def get_boxes(image_name):
                 i += 1
     
     accepted_boxes = sort_boxes(accepted_boxes)
-    save_boxes(accepted_boxes, original)
+    boxes = extract_boxes(accepted_boxes, original)
 
-image_name = 'scanned_image.png'
-get_boxes(image_name)
+    return boxes
+
+# image_name = 'scanned_image.png'
+# img = cv2.imread(image_name, cv2.IMREAD_GRAYSCALE)
+# boxes = get_boxes(img)
+# cv2.imshow("img", boxes[10])
+# cv2.waitKey(0)
