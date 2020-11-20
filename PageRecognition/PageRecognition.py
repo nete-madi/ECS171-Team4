@@ -98,6 +98,11 @@ def getTopDownView(img, corners, sigma):
     scaled_corners = np.int0(new_corners/rat)
     return transformPerspective(warped, scaled_corners)
 
+def pageRecognition(inputImage):
+    corners = findCorners(inputImage, .5)
+    # Warp the image based on the corners found
+    warped = getTopDownView(inputImage, corners, .5)
+    return warped
 
 def main():
     gold = cv2.imread('../form-gold-image.jpg')
