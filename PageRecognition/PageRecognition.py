@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-def resize(img, height=800):
+def resize(img, height=1500):
     """ Resize image to given height """
     rat = height / img.shape[0]
     return rat, cv2.resize(img, (int(rat * img.shape[1]), height))
@@ -54,20 +54,54 @@ def autoCanny(resized_img, sigma):
 
 
 def transformPerspective(img, corners):
-    # Return top-down view of image
+    """Transform the perspective of the image so that it has the specified corners"""
     points = [point.tolist()[0] for point in corners]
     points.sort(key=lambda p: p[1])
     points = sorted(points[:2], key=lambda p: p[0]) + sorted(points[2:], key=lambda p: p[0])
+
     width = max([points[1][0] - points[0][0], points[3][0] - points[2][0]])
     height = max([points[2][1] - points[0][1], points[3][1] - points[1][1]])
+
     input_points = np.float32(points)
     output_points = np.float32([[0,0],[width,0],[0,height],[width,height]])
+
     transform = cv2.getPerspectiveTransform(input_points, output_points)
     return cv2.warpPerspective(img, transform, (width,height))
 
+
+def getTopDownView(img, corners, sigma):
+    """Perform image alignment"""
+    warped = transformPerspective(img, corners)
+    rat, resized_img = resize(warped)
+    gray_img = cv2.cvtColor(resized_img, cv2.COLOR_BGR2GRAY)
+    fltrd_img = cv2.bilateralFilter(gray_img, 5, 20, 20)
+    fltrd_edged_img = autoCanny(fltrd_img, sigma)
+    contours,_ = cv2.findContours(fltrd_edged_img, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+
+    # Find the contour with the smallest area greater than the threshold
+    min_cnt = None
+    min_area = fltrd_edged_img.shape[0]*fltrd_edged_img.shape[1]
+    area_thresh = 0.5*min_area
+
+    for cnt in contours:
+        curr_area = cv2.contourArea(cnt)
+        if curr_area > area_thresh and curr_area < min_area:
+            min_area = curr_area
+            min_cnt = cnt
+
+    if min_cnt is None: return warped
+
+    # Approximate the polygon for the contour
+    epsilon = 0.1*cv2.arcLength(min_cnt,True)
+    new_corners = cv2.approxPolyDP(min_cnt,epsilon,True)
+
+    scaled_corners = np.int0(new_corners/rat)
+    return transformPerspective(warped, scaled_corners)
+
+
 def main():
-    gold = cv2.imread('../patient-info-form-page-001.jpg')
-    img = cv2.imread('./PageSample.JPG')
+    gold = cv2.imread('../form-gold-image.jpg')
+    img = cv2.imread('./test2.png')
     corners = findCorners(img, .5)
 
     # Draw the polygon on the original image
@@ -75,7 +109,9 @@ def main():
     cv2.imshow("img", img)
 
     # Warp the image based on the corners found
-    warped = transformPerspective(img, corners)
+    warped = getTopDownView(img, corners, .5)
+    cv2.imshow('warped', warped)
+    cv2.waitKey(0)
 
     # Resize the warped image so that it will fit on the gold standard
     warped = cv2.resize(warped, (gold.shape[1], gold.shape[0]))
