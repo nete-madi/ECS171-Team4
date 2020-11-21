@@ -85,6 +85,7 @@ def get_boxes(img):
     # # read image and apply grayscale
     # img = cv2.imread(image_name, cv2.IMREAD_GRAYSCALE)
     # create a copy to extract fields from it later
+    img = cv2.resize(img, (1300,1700))
     original = img.copy()
     # thresholding - simplest method of segmenting images (process of partitionning a digital image into multiple segments, goal is to simplify image into a representation that is easier to analyze)
     # takes in grescale image. Used to create a binary image, returns threshold image
@@ -95,8 +96,8 @@ def get_boxes(img):
     # returned contours is a list of points consisting of the contour lines
     contours, _ = cv2.findContours(image=threshold, mode=cv2.RETR_TREE, method=cv2.CHAIN_APPROX_SIMPLE)
 
-    min_box_area = 750
-    max_box_area = 1000
+    min_box_area = 1200
+    max_box_area = 1800
     image_number = 1
     rejects_number = 1
     accepted_boxes = []
