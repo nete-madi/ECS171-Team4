@@ -1,3 +1,6 @@
+import cv2
+# import numpy as np
+
 import sys
 import os
 sys.path.insert(1,os.path.join('..','..','ECS171-Team4','BoxExtraction'))
@@ -6,20 +9,22 @@ import box_extraction as be
 sys.path.insert(1,os.path.join('..','..','ECS171-Team4','PageRecognition'))
 import PageRecognition as pr
 
+def main():
+    image_name = 'test.png'
+    boxes = process_image(image_name)
+    # cv2.imshow('boxes', np.concatenate(boxes))
+    # cv2.waitKey(0)
 
+def process_image(image_path):
+    img = cv2.imread(image_path)
+    page = pr.pageRecognition(img)
+    page = cv2.cvtColor(page, cv2.COLOR_BGR2GRAY)
 
-import cv2
-image_name = 'test.png'
-img = cv2.imread(image_name)
-warped = pr.pageRecognition(img)
-warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
-# cv2.imshow('img', warped)
+    boxes = be.get_boxes(page)
+    boxes = [cv2.resize(box, (28,28)) for box in boxes]
+    boxes = [box.reshape((28,28,1)) for box in boxes]
 
-# cv2.waitKey(0)
-# cv2.waitKey(0)
+    return boxes
 
-
-# image_name = 'scanned_image.png'
-# img = cv2.imread(image_name, cv2.IMREAD_GRAYSCALE)
-boxes = be.get_boxes(warped)
-cv2.imshow("img", boxes[0])
+if __name__ == "__main__":
+    main()
