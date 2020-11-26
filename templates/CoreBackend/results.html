@@ -71,7 +71,12 @@ h2 {
   font-size: 2rem;
 }
 
-
+td{
+    border:1px solid black;
+}
+table{
+    margin: auto;
+}
 .button {
   font-family: Raleway, sans-serif;
   background-color: #2c4964;
@@ -146,20 +151,88 @@ h2 {
         <a href="{% url 'index' %}">Home</a>
     </nav>
 
-
-    <div class="sales-points">
-      <div class="sales-point">
-        <h2>EDA Results</h2>
-        <p>Maecenas id volutpat tellus. Praesent at rhoncus ante, non sollicitudin nisl.</p>
-      </div>
-    </div>
-
     <div class="sales-points">
      <div class="sales-point">
         <h2>Download CSV</h2>
           <button>DOWNLOAD!</button>
       </div>
     </div>
+
+    <div class="sales-points">
+      <div class="sales-point">
+        <h2>EDA Results</h2>
+          <h3>We will be using an extension of the MNIST letter recognition data set.</h3>
+          <p>
+              <p style="text-decoration: underline">Reference Paper</p>
+              <p>https://arxiv.org/pdf/1702.05373.pdf</p>
+              This paper discusses the EMNIST data set, which is a data set that extends MNIST to recognition of handwritten letters in a more challenging manner. The paper goes into detail about benchmarks of the set, as well as a validation of the set that establishes its comparability to the original MNIST set.
+          </p>
+          <br>
+          <div id="prelim_analysis">
+              <p style="text-decoration: underline">Let's start analysing our dataset!</p>
+              <p>We analyzed our data set by looking at the size of the training and testing set, as well as the dimension of an image of a letter. We have provided some examples of samples in the set to give an idea of the data contained in our set, as well as the manner in which the letters are classified.</p>
+              <ul>
+                  <li>Number of training sample:  124800</li>
+                  <li>Number of testing  sample:  20800</li>
+                  <li>EMINST letter image has same dimension (28 x 28) as MINST</li>
+              </ul>
+              <p>Try to see if we can distinguish these letters with our eyes ...</p>
+              <table>
+                  <tr>
+                      <td><img src="{% static 'CoreBackend/images/prelim_j.png' %}"</td>
+                      <td><img src="{% static 'CoreBackend/images/prelim_r.png' %}" ></td>
+                      <td><img src="{% static 'CoreBackend/images/prelim_h.png' %}"></td>
+                  </tr>
+                  <tr>
+                      <td>The letter J</td>
+                      <td>The letter R</td>
+                      <td>The letter H</td>
+                  </tr>
+              </table>
+              <p>It's clear that there is some ambiguity in the way the letters are written. For instance, the middle letter could be seen as a lowercase h, or a lowercase n as the classifier as specified. In addition, the last letter may not look like a letter at all, but it is in fact classified to be a lowercase letter r. These examples are shown to give a visual representation of how vague/ambiguous letters can be, and the high expectations that we have of our classifier to be able to recognize them.</p>
+          </div>
+          <br>
+          <div>
+              <p style="text-decoration: underline">How many different kinds of letters are there?</p>
+              <table style="border:2px solid black">
+                  <tr>
+                      <td>The Letter N</td>
+                      <td>The Letter W</td>
+                  </tr>
+                  <tr>
+                      <td><img src="{% static 'CoreBackend/images/letterexpo_n1.png' %}"></td>
+                      <td><img src="{% static 'CoreBackend/images/letterexpo_w1.png' %}"></td>
+                  </tr>
+                  <tr>
+                      <td><img src="{% static 'CoreBackend/images/letterexpo_n2.png' %}"></td>
+                      <td><img src="{% static 'CoreBackend/images/letterexpo_w2.png' %}"></td>
+                  </tr>
+                  <tr>
+                      <td><img src="{% static 'CoreBackend/images/letterexpo_n3.png' %}"></td>
+                      <td><img src="{% static 'CoreBackend/images/letterexpo_w3.png' %}"></td>
+                  </tr>
+                  <tr>
+                      <td><img src="{% static 'CoreBackend/images/letterexpo_n4.png' %}"></td>
+                      <td><img src="{% static 'CoreBackend/images/letterexpo_w4.png' %}"></td>
+                  </tr>
+                    <tr>
+                      <td><img src="{% static 'CoreBackend/images/letterexpo_n5.png' %}"></td>
+                      <td><img src="{% static 'CoreBackend/images/letterexpo_w5.png' %}"></td>
+                  </tr>
+              </table>
+
+          </div>
+
+          <div id="InternalLetter">
+              <p style="text-decoration: underline">What is inside the image?</p>
+              <p>We converted an image of a letter to greyscale and printed the greyscale value at each pixel. In this way, the network is able to distinguish between different types of letters.</p>
+              <img src="{% static 'CoreBackend/images/JNumber.png' %}">
+          </div>
+
+
+      </div>
+    </div>
+
 
 </body>
 </html>
