@@ -90,7 +90,7 @@ def get_boxes(img):
     # thresholding - simplest method of segmenting images (process of partitionning a digital image into multiple segments, goal is to simplify image into a representation that is easier to analyze)
     # takes in grescale image. Used to create a binary image, returns threshold image
     blur = cv2.GaussianBlur(img, (5,5), 0)
-    _, threshold = cv2.threshold(img, 135, 255, cv2.THRESH_BINARY)
+    threshold = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
     # mode cv2.RETR_TREE: way to find contours 
     # method cv2.CHAIN_APPROX_SIMPLE: approximation method for the detection. contour line indicates a line representing a boundary of the same intensities
     # returned contours is a list of points consisting of the contour lines
