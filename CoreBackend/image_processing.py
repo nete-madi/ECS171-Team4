@@ -1,17 +1,14 @@
 import cv2
-# import numpy as np
 
-import sys
-import os
-sys.path.insert(1,os.path.join('..','..','ECS171-Team4','BoxExtraction'))
 import box_extraction as be
-
-sys.path.insert(1,os.path.join('..','..','ECS171-Team4','PageRecognition'))
-import PageRecognition as pr
+import page_recognition as pr
 
 def main():
-    image_name = 'test.png'
-    boxes = process_image(image_name)
+    pass
+    # import numpy as np
+    #
+    # image_name = 'test2.png'
+    # boxes = process_image(image_name)
     # cv2.imshow('boxes', np.concatenate(boxes))
     # cv2.waitKey(0)
 
