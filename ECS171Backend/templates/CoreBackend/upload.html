@@ -165,32 +165,12 @@ h2 {
 
     <div class="doctor">
         <h2>Upload Instructions</h2>
-        <p>Please fill out all necessary sections using either black or blue ink. Take a picture of the completed form, allowing all edges to be in the frame of the photo. Upload the form and select "okay" if the image is legable/ no blurry....blah blah blah</p>
+        <p>Please fill out all necessary sections using either black or blue ink. Take a picture of the completed form, allowing all edges to be in the frame of the photo. Upload the form and select "okay" if the image is legable/ not blurry.</p>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form }}
             <input type="submit" value="Submit" class="button">
         </form>
     </div>
-
-    <div class="sales-points">
-      <div class="sales-point">
-        <h2>Brief Project Description</h2>
-        <p>Maecenas id volutpat tellus. Praesent at rhoncus ante, non sollicitudin nisl.</p>
-      </div>
-      <div class="sales-point">
-        <h2>Teams</h2>
-        <p>Neural Networks</p>
-        <p>Data Processing</p>
-        <p>Delivery</p>
-      </div>
-      <div class="sales-point">
-        <h2>Data Visualization</h2>
-        <p>Maecenas id volutpat tellus. Praesent at rhoncus ante, non sollicitudin nisl.</p>
-      </div>
-    </div>
-
-
-
 </body>
 </html>
