@@ -6,33 +6,24 @@ from CoreBackend import page_recognition as pr
 
 def main():
     pass
-    #
-    #
-    # image_name = 'test2.png'
-    # boxes = process_image(image_name)
-    # cv2.imshow('boxes', np.concatenate(boxes))
-    # cv2.waitKey(0)
 
 def process_image(image_path):
-    img = cv2.imread(image_path)
-    page = pr.pageRecognition(img)
-    page = cv2.cvtColor(page, cv2.COLOR_BGR2GRAY)
+	img = cv2.imread(image_path)
+	# page = pr.pageRecognition(img)
+	# cv2.imshow('img', img)
+	# cv2.waitKey(0)
+	page = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    boxes = be.get_boxes(page)
-    boxes = [cv2.bitwise_not(box) for box in boxes]
-    boxes = [cv2.threshold(box, 127, 255, cv2.THRESH_BINARY)[1] for box in boxes]
+	boxes = be.get_boxes(page)
+	boxes = [cv2.bitwise_not(box) for box in boxes]
+	boxes = [cv2.threshold(box, 127, 255, cv2.THRESH_BINARY)[1] for box in boxes]
 
-    # Zoom into digit/letter
-    # boxes = [cv2.GaussianBlur(box, (5,5),0) for box in boxes]
-    boxes = [crop_img(box) for box in boxes]
-
-    boxes = [cv2.resize(box, (28,28)) for box in boxes]
-
-
-    boxes = [np.reshape(box, (28,28,1)) for box in boxes]
-
-
-    return boxes
+	# Zoom into digit/letter
+	# boxes = [cv2.GaussianBlur(box, (5,5),0) for box in boxes]
+	boxes = [crop_img(box) for box in boxes]
+	boxes = [cv2.resize(box, (28,28)) for box in boxes]
+	boxes = [np.reshape(box, (28,28,1)) for box in boxes]
+	return boxes
 
 def crop_img(img):
     coords = cv2.findNonZero(img)  # Find all non-zero points (text)

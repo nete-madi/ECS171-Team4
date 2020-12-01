@@ -14,7 +14,7 @@ from sklearn.model_selection import train_test_split
 from extra_keras_datasets import emnist
 
 
-from image_processing import process_image
+from CoreBackend.image_processing import process_image
 import cv2
 
 # Create dict for decoding array
@@ -37,6 +37,14 @@ for i, j in enumerate(range(10, 36)):
 	output_dict[str(j)] = alphabet_lower[i]
 for i, j in enumerate(range(36, 62)):
 	output_dict[str(j)] = alphabet_upper[i]
+
+validation = ['J', 'O', 'H', 'N', ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', '4', \
+'2', 'M','S', 'M', 'I', 'T', 'H',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', \
+'0', '6', '0', '4', '2', '0', '2', '0','1', '6', '0', '0', ' ', 'P', 'e', 'n', 'n', 's', 'y', 'l', 'v', 'a', \
+'n', 'i', 'a', ' ', 'A', 'v', ' ', 'N', 'W', ' ', ' ', ' ', ' ', ' ',' ', ' ', ' ', ' ', ' ',' ', ' ', ' ', ' ', ' ', \
+' ', ' ', ' ', ' ', ' ',' ', ' ', ' ', ' ', ' ',' ', ' ', ' ', ' ', ' ',' ', ' ', ' ', 'w', 'a',\
+'s', 'h', 'i', 'n', 'g', 't', 'o', 'n', '', 'D', 'C', '', '', '', '', '', '', '', 'D', 'C', '9', '5', '6', '1', '6',\
+'1', '3', '9', '', '', 'N', 'Y']
 
 def load_data(type='byclass', out_dim=62):
 	(train_x, train_y), (test_x, test_y) = emnist.load_data(type=type)
@@ -69,16 +77,10 @@ def decode(encoded_predictions):
 	return predictions
 
 def test_model(model_path, test_input):
-	true = ['J', 'O', 'H', 'N', ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', '4', \
-	'2', 'M','S', 'M', 'I', 'T', 'H',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', \
-	'0', '6', '0', '4', '2', '0', '2', '0','1', '6', '0', '0', ' ', 'P', 'e', 'n', 'n', 's', 'y', 'l', 'v', 'a', \
-	'n', 'i', 'a', ' ', 'A', 'v', ' ', 'N', 'W', ' ', ' ', ' ', ' ', ' ',' ', ' ', ' ', ' ', ' ',' ', ' ', ' ', ' ', ' ', \
-			' ', ' ', ' ', ' ', ' ',' ', ' ', ' ', ' ', ' ',' ', ' ', ' ', ' ', ' ',' ', ' ', ' ', 'w', 'a',\
-	's', 'h', 'i', 'n', 'g', 't', 'o', 'n', '', 'D', 'C', '', '', '', '', '', '', '', 'D', 'C', '9', '5', '6', '1', '6',\
-	'1', '3', '9', '', '', 'N', 'Y']
+
 	model = keras.models.load_model(model_path)
 	predictions = decode(np.round(model.predict(test_input)))
-	df = pd.DataFrame([predictions,true])
+	df = pd.DataFrame([predictions,validation])
 	df.to_csv("predictions.csv")
 	print(df.head())
 	return predictions
@@ -103,7 +105,7 @@ if __name__ == '__main__':
 	# train_x, train_y, _, _ = load_data()
 
 	# test_x = process_image('IMG_2325.JPG')
-	test_x = process_image('image0.jpg')
+	test_x = process_image('test_image1.jpg')
 	test_x = np.array(test_x)
 
 	# cv2.imshow('train', np.concatenate(train_x[0:5]))
