@@ -16,9 +16,9 @@
 - OpenCV (`pip3 install opencv-python`)
 
 5. Use the following command to start server: `python3 manage.py runserver` [Make sure you are in the same directory level as the manage.py in ECS171]
-6. Go to `http://127.0.0.1:8000/` to view and play around with the website! Please make sure to use the empty provided form `Patient_Form.png` (It should be included the project files you downloaded of GitHub from step 1 in this guide).
+6. Go to `http://127.0.0.1:8000/` to view and play around with the website! Please make sure to use the empty provided form `Patient_Form.png` (It should be included the project files you downloaded off GitHub from step 1 in this guide).
 
-The CSV is formated in the following way:
+The output CSV is formated in the following way:
 ```
 ,0,1,2,3, [position of letters]
 0,0 [the numbers of letters it has read in]
