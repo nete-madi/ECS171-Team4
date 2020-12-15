@@ -1,9 +1,9 @@
-﻿
+
 # ECS 171 (Group 4) - Web Site Start Guide
 
 0. Have Python3 installed and be using a Linux PC(x86).
 1. Download Group Code from GitHub: https://github.com/nete-madi/ECS171-Team4
-2.  'Enter the following in a Linux terminal to install the web framework we used: `pip3 install django`
+2. Enter the following in a Linux terminal to install the web framework we used: `pip3 install django`
 3. Go into the ECS171-Team4(unzipped file)'s ECS171 folder: `cd ECS171-Team4-main/ECS171Backend`
 4. Make sure you have the following libraries installed:
 - Matplotlib (`pip3 install matplotlib`)
